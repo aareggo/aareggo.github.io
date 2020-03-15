@@ -1,0 +1,86 @@
+*{
+	margin:0;
+	padding:0;
+}
+.frame {
+  position: relative;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.slides {
+  display: inline-block;
+}
+
+li {
+  position: relative;
+  display: inline-block;
+}
+
+/* CUSTOM CSS STYLES FOR THE PEN AND THE SLIDER */
+.slider {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding:0;
+}
+
+.frame {
+  background-color: #2E435A;
+  width: 100%;
+  height: 125px;
+  margin: 0;
+  padding:0;
+}
+
+.slides {
+  text-align: center;
+}
+.slides .js_slide {
+  color: #fff;
+  width: 880px;
+  height: 125px;
+  font-size: 16px;
+  line-height: 125px;
+}
+
+.js_prev, .js_next {
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  display: block;
+  cursor: pointer;
+}
+
+.js_prev {
+  left: 0;
+}
+
+.js_next {
+  right: 0;
+}
+
+.slider_navigation_dots {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  margin-top: 10px;
+  position: absolute;
+  width: 100%;
+}
+.slider_navigation_dots li {
+  background-color: #eee;
+  border: 1px solid #666;
+  border-radius: 4px;
+  display: inline-block;
+  height: 6px;
+  width: 22px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.slider_navigation_dots li.active {
+  background-color: #41ABE5;
+
+}

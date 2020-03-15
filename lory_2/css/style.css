@@ -1,0 +1,85 @@
+*{
+margin:0;
+padding:0;
+height:100%;
+}
+.frame {
+position: relative;
+font-size: 0;
+line-height: 0;
+overflow: hidden;
+white-space: nowrap;
+}
+li {
+position: relative;
+display: inline-block;
+}
+.slider {
+position: relative;
+width: 100%;
+margin: 0 auto 20px;
+}
+.frame {
+width: 100%;
+height: 100%;
+margin: 0 auto;
+}
+.slides {
+text-align: center;
+}
+.slides .js_slide {
+background:url(.3/bg.jpg) no-repeat;
+background-size:cover;
+color: #fff;
+width: 100%;
+margin:0;
+height: 100%;
+font-size: 16px;
+line-height: 125px;
+}
+.slider_navigation_dots {
+margin: 0;
+padding: 0;
+text-align: center;
+bottom: 80px;
+height:20px;
+position: absolute;
+width: 100%;
+}
+.slider_navigation_dots li {
+ background: linear-gradient(270deg,rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.6) 50%);
+    background-size:200% 100%;
+    background-position:right bottom;
+    transition:5s ease-out;
+border-radius: 2px;
+display: inline-block;
+height: 6.5px;
+width: 32px;
+margin: 0 8.5px;
+cursor: pointer;
+}
+.slider_navigation_dots li:before
+{
+	content: "";
+	position: absolute;
+width: 64px;
+	height: 6.5px;
+	left: -100%;
+	top:50px;
+z-index:-1;
+	background-size:300% 100%;
+	background: linear-gradient(270deg,rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.6) 50%);
+
+}
+
+.slider_navigation_dots .active:before{
+		animation: scroll 4.5s linear;
+}
+@keyframes scroll {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(50%, 0)
+    }
+}
