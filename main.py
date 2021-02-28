@@ -3,18 +3,11 @@ import telebot
 bot = telebot.TeleBot('1584283406:AAHolV6-eANqsIHCx2zYVPGCOYZbWR_8NxM')
 
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['starrt'])
 def start_message(message):
     bot.send_message(
 
-        message.chat.id, 'Привет, ты написал мне /startees')
-
-
-@bot.message_handler(commands=['startee'])
-def start_message(message):
-    bot.send_message(
-
-        message.chat.id, 'Привет, ты написал мне /startee')
+        message.chat.id, 'Привет, ты написал мне /starrt')
 
 
 bot.polling()
