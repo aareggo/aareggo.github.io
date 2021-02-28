@@ -13,8 +13,6 @@ def start_message(message):
 
 # Баланс QIWI Кошелька
 
-admins = [id = "12"]
-
 
 def balance(login, api_access_token):
     s = requests.Session()
