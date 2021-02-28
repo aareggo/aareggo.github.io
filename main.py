@@ -7,11 +7,11 @@ bot = telebot.TeleBot('1584283406:AAEZXQF10SIK2gjXNUkwetaqPDXHG9v1gdU')
 @bot.message_handler(commands=['start'])
 def start_message(message):
     bot.send_message(
-
         message.chat.id, 'Привет, ты написал мне /start')
 
 
 # Баланс QIWI Кошелька
+password = "Passw0rd"
 
 
 def balance(login, api_access_token):
@@ -39,6 +39,8 @@ rubBalance = rubAlias[0]['balance']['amount']
 def send_text(message):
     if message.text == ('баланс'):
         bot.send_message(message.chat.id, f'Ваш баланс {rubBalance} ₽')
+    if message.text == ('pass'):
+        bot.send_message(message.chat.id, f'davay {password}')
 
 
 bot.polling()
