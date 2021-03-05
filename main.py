@@ -50,7 +50,8 @@ passwo = "Passw0rd"
 @bot.message_handler(commands=['pay'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()
-    url_b = types.InlineKeyboardButton(text=wassup, url=https: // instagram.com/shpan)
+    url_b = types.InlineKeyboardButton(
+        text=wassup, url="https: // instagram.com/shpan")
     keyboard.add(url_b)
     bot.send_message(message.chat.id, 'Оплатить', reply.markup.keyboard)
 
