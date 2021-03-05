@@ -41,7 +41,7 @@ def start_message(message):
         text='Пополнить', callback_data='pay')
     markup_inline.add(item_insta, item_pay)
     bot.send_message(
-        message.chat.id, f'Для того что бы начать пользоватся ботом надо пополнить баланс id={f_id}', reply_markup=markup_inline)
+        message.chat.id, f'Для того что бы начать пользоватся ботом надо пополнить баланс id="{f_id}"', reply_markup=markup_inline)
 
 
 @bot.callback_query_handler(func=lambda call: True)
