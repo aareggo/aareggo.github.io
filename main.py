@@ -36,8 +36,12 @@ def start_message(message):
     f_name = message.from_user.first_name
     bot.send_message(
         message.chat.id, f'Привет {f_name}, твои возможности ограничены')
+
+    markup_inline = types.InlineKeyboardMarkup()
+    item_pay = types.InlineKeyboardButton(text='Оплатить', callback_data='pay')
+    markup_inline.add(item_pay)
     bot.send_message(
-        message.chat.id, 'Для того что бы начать пользоватся ботом надо пополнить баланс')
+        message.chat.id, 'Для того что бы начать пользоватся ботом надо пополнить баланс', reply_markup=markup_inline)
 
 
 passwo = "Passw0rd"
