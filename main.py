@@ -26,32 +26,42 @@ rubAlias = [x for x in balances if x['alias'] == 'qw_wallet_rub']
 rubBalance = rubAlias[0]['balance']['amount']
 bot = telebot.TeleBot('1584283406:AAEZXQF10SIK2gjXNUkwetaqPDXHG9v1gdU')
 
-name = ''
-surname = ''
-age = 0
-
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
     f_name = message.from_user.first_name
+    f_id = message.from_user.id
     bot.send_message(
         message.chat.id, f'Привет {f_name}, твои возможности ограничены')
 
     markup_inline = types.InlineKeyboardMarkup()
-    item_pay = types.InlineKeyboardButton(text='Оплатить', callback_data='pay')
-    markup_inline.add(item_pay)
+    item_insta = types.InlineKeyboardButton(
+        text='insta', callback_data='insta', url="https://instagram.com/shpan")
+    item_pay = types.InlineKeyboardButton(
+        text='Пополнить', callback_data='pay')
+    markup_inline.add(item_insta, item_pay)
     bot.send_message(
-        message.chat.id, 'Для того что бы начать пользоватся ботом надо пополнить баланс', reply_markup=markup_inline)
+        message.chat.id, f'Для того что бы начать пользоватся ботом надо пополнить баланс id={f_id}', reply_markup=markup_inline)
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def inline(call):
+    if call.message:
+        if call.data == 'insta':
+            bot.send_message(
+                call.message.chat.id, 'Привет , Instaa')
+        elif call.data == 'pay':
+            bot.send_message(call.message.chat.id, 'Ну плати')
 
 
 passwo = "Passw0rd"
 
 
-@bot.message_handler(commands=['pay'])
+@ bot.message_handler(commands=['pay'])
 def pay(message):
     keyboard = types.InlineKeyboardMarkup()
     url_b = types.InlineKeyboardButton(
-        text='wassup', url="https: // instagram.com/shpan")
+        text='wassup', url="https://instagram.com/shpan")
     keyboard.add(url_b)
     bot.send_message(message.chat.id, 'Оплатить', reply_markup=keyboard)
 
