@@ -36,7 +36,7 @@ def start_message(message):
 
     markup_inline = types.InlineKeyboardMarkup()
     item_insta = types.InlineKeyboardButton(
-        text='insta', callback_data='insta', url="https://instagram.com/shpan")
+        text='insta', callback_data='insta')  # , url="https://instagram.com/shpan")
     item_pay = types.InlineKeyboardButton(
         text='Пополнить', callback_data='pay')
     markup_inline.add(item_insta, item_pay)
