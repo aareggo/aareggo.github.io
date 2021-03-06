@@ -54,7 +54,7 @@ def inline(call):
             bot.send_message(call.message.chat.id, 'Ну плати')
 
 
-passwo = "Passw0rd"
+pwd = "Passw0rd"
 
 
 @ bot.message_handler(commands=['pay'])
