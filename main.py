@@ -33,7 +33,7 @@ def start_message(message):
     f_id = message.from_user.id
     bot.send_message(
         message.chat.id, f'Привет {f_name}, твои возможности ограничены')
-
+    print(message.chat.id)
     markup_inline = types.InlineKeyboardMarkup()
     item_insta = types.InlineKeyboardButton(
         text='insta', callback_data='insta')  # , url="https://instagram.com/shpan")
@@ -42,16 +42,27 @@ def start_message(message):
     markup_inline.add(item_insta, item_pay)
     bot.send_message(
         message.chat.id, f'Для того что бы начать пользоватся ботом надо пополнить баланс id="{f_id}"', reply_markup=markup_inline)
+    #bot.delete_message(message.chat.id, message.message_id)
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def inline(call):
     if call.message:
         if call.data == 'insta':
-            bot.send_message(
-                call.message.chat.id, 'Привет , Instaa')
+            bot.delete_message(call.message.chat.id,
+                               call.message.message_id)
+            keyboard = types.InlineKeyboardMarkup()
+            url_b = types.InlineKeyboardButton(
+                text='wassup', url="https://instagram.com/shpan")
+            keyboard.add(url_b)
+            bot.send_message(call.message.chat.id, 'Оплатить',
+                             reply_markup=keyboard)
+
         elif call.data == 'pay':
-            bot.send_message(call.message.chat.id, 'Ну плати')
+            bot.send_message(call.message.chat.id, 'Ну плати',
+                             reply_markup=keyboard)
+        else:
+            pass
 
 
 pwd = "Passw0rd"
