@@ -16,7 +16,7 @@ def balance(login, api_access_token):
 
 # номер кошелька в формате 79992223344
 mylogin = '998946449696'
-api_access_token = 'ee125ea7e8fdad4e442e28e09a8661d1'
+api_access_token = 'a9868427418df870351f1c3832092de3'
 
 # все балансы
 balances = balance(mylogin, api_access_token)['accounts']
