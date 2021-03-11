@@ -40,9 +40,9 @@ photo = 'https://medialeaks.ru/wp-content/uploads/2017/10/catbread-03-600x400.jp
 def wallet(message):
     key = types.InlineKeyboardMarkup()
     but_1 = types.InlineKeyboardButton(
-        text="Пополнить", callback_data="enter")
+        text="➕Пополнить", callback_data="enter")
     but_2 = types.InlineKeyboardButton(
-        text="Вывести", callback_data="exit")
+        text="➖Вывести", callback_data="exit")
     key.add(but_1, but_2)
     bot.send_message(message.chat.id, f"⁠⚙️ Ваш ID: {message.chat.id}\n\n💰 Ваш баланс: 0.0₽\n👥 Партнеров: 0 чел." + '[⠀]' +
                      '(' + photo + ')', parse_mode='markdown', reply_markup=key)
