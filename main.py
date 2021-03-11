@@ -25,9 +25,9 @@ def start_message(message):
 def invest(message):
     key = types.InlineKeyboardMarkup()
     but_1 = types.InlineKeyboardButton(
-        text="NumberOne", callback_data="NumberOne")
+        text="➕Инвестировать", callback_data="NumberOne")
     but_2 = types.InlineKeyboardButton(
-        text="NumberTwo", callback_data="NumberTwo")
+        text="➖Собрать", callback_data="NumberTwo")
     key.add(but_1, but_2)
     bot.send_message(
         message.chat.id, "⁠▪️ Открывай инвестиции и получай стабильную прибыль в данном разделе, после собирай доход: \n\n💎 Процент прибыли: 3.2 %\n⏱ Время доходности: 24 часа\n📆 Срок вклада: 30 дней\n\n💳 Ваш вклад: 0.0₽\n💵 Накопление: 0.0₽\n\n🧭 Время до сбора: 0: 00: 00", reply_markup=key)
