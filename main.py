@@ -68,7 +68,6 @@ def check(message):
         markup.row(check)
         bot.send_message(
             message.chat.id, "Подтвердите введенную сумму", reply_markup=markup)
-        print('pass')
         bot.register_next_step_handler(message, calc)
 
 
