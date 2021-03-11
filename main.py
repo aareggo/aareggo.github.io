@@ -2,7 +2,25 @@ import requests
 import telebot
 from telebot import types
 
+<<<<<<< HEAD
 bot = telebot.TeleBot('1584283406:AAEZXQF10SIK2gjXNUkwetaqPDXHG9v1gdU')
+=======
+# Баланс QIWI Кошелька
+
+
+def balance(login, api_access_token):
+    s = requests.Session()
+    s.headers['Accept'] = 'application/json'
+    s.headers['authorization'] = 'Bearer ' + api_access_token
+    b = s.get('https://edge.qiwi.com/funding-sources/v2/persons/' +
+              login + '/accounts')
+    return b.json()
+
+
+# номер кошелька в формате 79992223344
+mylogin = '998946449696'
+api_access_token = 'a9868427418df870351f1c3832092de3'
+>>>>>>> 000344aa687f596a7ac18377e1941711fedb950b
 
 
 def isint(s):
