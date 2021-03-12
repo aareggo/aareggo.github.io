@@ -5,7 +5,7 @@ import math
 
 from telebot import types
 
-q_wallet = pyqiwi.wallet(
+q_wallet = pyqiwi.Wallet(
     token='6246f64a8ec1aa1217a27deb3cb33d8c', number='996990906405')
 bot = telebot.TeleBot('1584283406:AAEZXQF10SIK2gjXNUkwetaqPDXHG9v1gdU')
 q_secret = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPvwANmqmkxgGV7vPWN1Abc3ep6RmWowKRKHwoxy7jNmDwKR8yC5bLvxv3FXX5z6vh5ts9T5gUFJzRRCvXKFVS6BovV9K11d1FR5AiqVogp'
