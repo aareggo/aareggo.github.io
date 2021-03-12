@@ -5,6 +5,19 @@ import math
 
 from telebot import types
 
+
+###
+
+from decimal import Decimal
+
+from qiwi_payments.kassa import QiwiKassa
+
+kassa = QiwiKassa('eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6InBmMTJvMy0wMCIsInVzZXJfaWQiOiI5OTY5OTA5MDY0MDUiLCJzZWNyZXQiOiI0NjExYTM2ODY1NzY1OGNkNDZhZTk1NzI4MDFjZmRmZjEzYzA2YzIyYmI2YTg3N2ZiYmIzMTNkNjVhMmNhN2FjIn19')
+
+
+####
+
+
 q_wallet = pyqiwi.Wallet(
     token='6246f64a8ec1aa1217a27deb3cb33d8c', number='996990906405')
 bot = telebot.TeleBot('1584283406:AAEZXQF10SIK2gjXNUkwetaqPDXHG9v1gdU')
@@ -17,6 +30,38 @@ if q_wallet.balance() > 100:
         pid=99, recipient='998946449696', amount=qb, comment='Привет!')
 else:
     pass
+
+
+@bot.message_handler(regexp="Balans")
+def send_balance(message):
+    bot.send_message(
+        message.chat.id, f'tvoy balans={q_wallet.balance()}\nk vivodu vozmojno - {qb}')
+
+
+@bot.message_handler(regexp="Oplata")
+def vv(message):
+    bot.send_message(message.chat.id, 'ce kupiw?')
+    bot.register_next_step_handler(message, chenad)
+
+
+comen = 'shhs'
+
+
+def chenad(message):
+    global comen
+    comen = message.text
+    bot.send_message(message.chat.id, f'pokupaew {comen}, skolko daw?')
+    bot.register_next_step_handler(message, prove)
+
+
+def prove(message):
+    voic = kassa.create_bill(
+        amount=Decimal(message.text),
+        currency='RUB',
+        comment=comen
+    )
+    print(voic.pay_url)
+    bot.send_message(message.chat.id, f'ebat na sooqa {voic.pay_url}')
 
 
 def isint(s):
