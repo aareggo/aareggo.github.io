@@ -1,5 +1,4 @@
-qiwipy==2.1.6
-qiwi_payments==0.1
+
 requests==2.24.0
 pyqiwi==0.2.0
 pyTelegramBotAPI==3.7.6
