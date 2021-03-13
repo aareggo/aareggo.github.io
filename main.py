@@ -236,7 +236,8 @@ def callback(call):
             callback_query_id=call.id, text="🚫 Отменено")
         re_message(call.message)
         bot.clear_step_handler_by_chat_id(call.from_user.id)
-         bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id, text="тр")
+        bot.edit_message_text(chat_id=call.message.chat.id,
+                              message_id=call.message.message_id, text="Отменено")
     elif call.data.startswith('goinvest'):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True,
                                   text="🚫 Пополните баланс, минимальная сумма инвестиции 500₽")
