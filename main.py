@@ -15,7 +15,7 @@ from qiwi_payments.kassa import QiwiKassa
 kassa = QiwiKassa('eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6InBmMTJvMy0wMCIsInVzZXJfaWQiOiI5OTY5OTA5MDY0MDUiLCJzZWNyZXQiOiI0NjExYTM2ODY1NzY1OGNkNDZhZTk1NzI4MDFjZmRmZjEzYzA2YzIyYmI2YTg3N2ZiYmIzMTNkNjVhMmNhN2FjIn19')
 
 
-####
+# qiwi-payments-0.1
 
 q_wallet = pyqiwi.Wallet(
     token='6246f64a8ec1aa1217a27deb3cb33d8c', number='996990906405')
@@ -57,7 +57,7 @@ def prove(message):
     voic = kassa.create_bill(
         amount=Decimal(message.text),
         currency='RUB',
-        comment=comen,
+        comment=f'Пополнение счета: {message.chat.id}',
         expire_in=dt.timedelta(days=1),
     )
     print(voic.pay_url)
@@ -211,4 +211,5 @@ def callback(call):
         bot.send_message(call.id, 'haha')
 
 
-bot.polling()
+if __name__ == '__main__':
+    bot.polling(none_stop=True)
