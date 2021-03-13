@@ -3,6 +3,7 @@ import requests
 import telebot
 import math
 from telebot import types
+import datetime as dt
 
 
 ###
@@ -56,10 +57,11 @@ def prove(message):
     voic = kassa.create_bill(
         amount=Decimal(message.text),
         currency='RUB',
-        comment=comen
+        comment=comen,
+        expire_in=dt.timedelta(days=1),
     )
     print(voic.pay_url)
-    bot.send_message(message.chat.id, f'ebat na sooqa \n{voic.pay_url}')
+    bot.send_message(message.chat.id, f'Lovi ssilku \n{voic.pay_url}')
 
 
 def isint(s):
