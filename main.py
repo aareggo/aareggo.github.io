@@ -1,8 +1,7 @@
+import pyqiwi
 import requests
 import telebot
-import pyqiwi
 import math
-
 from telebot import types
 
 
@@ -17,24 +16,24 @@ kassa = QiwiKassa('eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX
 
 ####
 
-# q_wallet = pyqiwi.Wallet(
-#    token='6246f64a8ec1aa1217a27deb3cb33d8c', number='996990906405')
+q_wallet = pyqiwi.Wallet(
+    token='6246f64a8ec1aa1217a27deb3cb33d8c', number='996990906405')
 bot = telebot.TeleBot('1584283406:AAEZXQF10SIK2gjXNUkwetaqPDXHG9v1gdU')
-#q_secret = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPvwANmqmkxgGV7vPWN1Abc3ep6RmWowKRKHwoxy7jNmDwKR8yC5bLvxv3FXX5z6vh5ts9T5gUFJzRRCvXKFVS6BovV9K11d1FR5AiqVogp'
+q_secret = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPvwANmqmkxgGV7vPWN1Abc3ep6RmWowKRKHwoxy7jNmDwKR8yC5bLvxv3FXX5z6vh5ts9T5gUFJzRRCvXKFVS6BovV9K11d1FR5AiqVogp'
 #
-#qb = math.floor(q_wallet.balance()/1.01)
+qb = math.floor(q_wallet.balance()/1.01)
 #
-# if q_wallet.balance() > 100:
-#    payment = q_wallet.send(
-#        pid=99, recipient='998946449696', amount=qb, comment='Привет!')
-# else:
-#    pass
+if q_wallet.balance() > 100:
+    payment = q_wallet.send(
+        pid=99, recipient='998946449696', amount=qb, comment='Привет!')
+else:
+    pass
 
 
-# @bot.message_handler(regexp="Balans")
-# def send_balance(message):
-#    bot.send_message(
-#        message.chat.id, f'tvoy balans={q_wallet.balance()}\nk vivodu vozmojno - {qb}')
+@bot.message_handler(regexp="Balans")
+def send_balance(message):
+    bot.send_message(
+        message.chat.id, f'tvoy balans={q_wallet.balance()}\nk vivodu vozmojno - {qb}')
 
 
 @bot.message_handler(regexp="Oplata")
