@@ -37,7 +37,7 @@ def send_balance(message):
         message.chat.id, f'tvoy balans={q_wallet.balance()}\nk vivodu vozmojno - {qb}')
 
 
-@bot.message_handler(regexp="Oplata")
+@bot.message_handler(regexp="Oplatatovara")
 def vv(message):
     bot.send_message(message.chat.id, 'ce kupiw?')
     bot.register_next_step_handler(message, chenad)
@@ -54,14 +54,7 @@ def chenad(message):
 
 
 def prove(message):
-    voic = kassa.create_bill(
-        amount=Decimal(message.text),
-        currency='RUB',
-        comment=f'Пополнение счета: {message.chat.id}',
-        expire_in=dt.timedelta(days=1),
-    )
-    print(voic.pay_url)
-    bot.send_message(message.chat.id, f'Lovi ssilku \n{voic.pay_url}')
+    print('ss')
 
 
 def isint(s):
@@ -90,7 +83,7 @@ def re_message(message):
     markup.row("💼 Инвестиции", "💳 Кошелёк")
     markup.row("👔 Партнерам", "📠 Калькулятор")
     bot.send_message(
-        message.chat.id, "Давайте начнём инвестировать", reply_markup=markup)
+        message.chat.id, "Главное меню", reply_markup=markup)
 
 
 @bot.message_handler(regexp="Инвестиции")
@@ -102,7 +95,7 @@ def invest(message):
         text="➖Собрать", callback_data="gocollect")
     key.add(but_1, but_2)
     bot.send_message(
-        message.chat.id, "⁠▪️ Открывай инвестиции и получай стабильную прибыль в данном разделе, после собирай доход: \n\n💎 Процент прибыли: 3.2 %\n⏱ Время доходности: 24 часа\n📆 Срок вклада: 30 дней\n\n💳 Ваш вклад: 0.0₽\n💵 Накопление: 0.0₽\n\n🧭 Время до сбора: 0: 00: 00", reply_markup=key)
+        message.chat.id, "⁠▪️ Открывайте инвестиции и получайте стабильную прибыль в данном разделе, после собирайте доход: \n\n💎 Процент прибыли: 3.2 %\n⏱ Время доходности: 24 часа\n📆 Срок вклада: 30 дней\n\n💳 Ваш вклад: 0.0₽\n💵 Накопление: 0.0₽\n\n🧭 Время до сбора: 0: 00: 00", reply_markup=key)
 
 
 photo = 'https://medialeaks.ru/wp-content/uploads/2017/10/catbread-03-600x400.jpg'
@@ -120,7 +113,62 @@ def wallet(message):
                      '(' + photo + ')', parse_mode='markdown', reply_markup=key)
 
 
-@bot.message_handler(regexp="Калькулятор")
+def lets_start(call):
+    markup = telebot.types.ReplyKeyboardMarkup(True, False)
+    markup.row("💼 Инвестиции", "💳 Кошелёк")
+    markup.row("👔 Партнерам", "📠 Калькулятор")
+    bot.send_message(
+        call.chat.id, "Введите требуемую сумму для Пополнения:", reply_markup=markup)
+    bot.register_next_step_handler(call, check)
+
+
+def check(message):
+    check = message.text
+    if check == "💼 Инвестиции":
+        invest(message)
+    elif check == "💳 Кошелёк":
+        wallet(message)
+    elif check == "👔 Партнерам":
+        aff(message)
+    elif check == "📠 Калькулятор":
+        start_calc(message)
+    elif check == "Отмена":
+        re_message(message)
+    elif not isint(check):
+        print('do a check popolneniya')
+        lets_start(message)
+
+    else:
+        markup = telebot.types.ReplyKeyboardMarkup(True, False)
+        markup.row(check)
+        markup.row('Отмена', 'Ввести заного')
+        bot.send_message(
+            message.chat.id, "Подтвердите введенную сумму:", reply_markup=markup)
+        bot.register_next_step_handler(message, dopusk)
+
+
+def dopusk(message):
+    if message.text == 'Отмена':
+        re_message(message)
+    elif message.text == 'Ввести заного':
+        lets_start(message)
+    else:
+        print('vot summa popolnenuiya')
+        print(message.text)
+        voic = kassa.create_bill(
+            amount=Decimal(message.text),
+            currency='RUB',
+            comment=f'Пополнение счета: {message.chat.id}',
+            expire_in=dt.timedelta(days=1),
+        )
+        markup = telebot.types.ReplyKeyboardMarkup(True, False)
+        markup.row("💼 Инвестиции", "💳 Кошелёк")
+        markup.row("👔 Партнерам", "📠 Калькулятор")
+        bot.send_message(
+            message.chat.id, f"uspex vot tvoya ssilka \n{voic.pay_url}", reply_markup=markup)
+
+
+@ bot.message_handler(regexp="Калькулятор")
 def start_calc(message):
     # markup = types.ForceReply(selective=False) prinuditelno otvechaet
     key = types.InlineKeyboardMarkup()
@@ -128,25 +176,13 @@ def start_calc(message):
         text="❌Отмена", callback_data="cancel")
     key.add(btn)
     bot.send_message(
-        message.chat.id, "Введите сумму от 500 до 30 000", reply_markup=key)
-    print(message.text)
-    bot.register_next_step_handler(message, check)
+        message.chat.id, "Введите требуемую сумму для вычисления", reply_markup=key)
+    bot.register_next_step_handler(message, check_clc)
 
 
-@bot.callback_query_handler(func=lambda call: True)
-def callba(call):
-    if call.data.startswith('cancel'):
-        bot.answer_callback_query(
-            callback_query_id=call.id, text="🚫 Отменено")
-        re_message(call.message)
-        bot.clear_step_handler_by_chat_id(call.from_user.id)
-
-
-def check(message):
+def check_clc(message):
     check = message.text
-    print('enter is ' + check)
     if check == "💼 Инвестиции":
-        print('atmen')
         invest(message)
     elif check == "💳 Кошелёк":
         wallet(message)
@@ -158,13 +194,7 @@ def check(message):
         print('do a check')
         start_calc(message)
     else:
-        print(check)
-        markup = telebot.types.ReplyKeyboardMarkup(True, False)
-        markup.row(check)
-        markup.row('Отмена' 'Ввести другую сумму')
-        bot.send_message(
-            message.chat.id, "Подтвердите введенную сумму:", reply_markup=markup)
-        bot.register_next_step_handler(message, calc)
+        calc(message)
 
 
 def calc(message):
@@ -190,7 +220,7 @@ def his(sm):
 @ bot.message_handler(regexp="Партнерам")
 def aff(message):
     bot.send_message(
-        message.chat.id, f"▪️ Наша партнерская программа считается самой эффективной, приглашай друзей и получай деньги\n\n💰 Всего отчислений: 0.0₽\n\n💳 Процент с инвестиций: 12 %\n💵 Процент с выплаты: 10 %\n👥 Партнеров: 0 чел\n\n🔗 Ваша реф-ссылка: https://telegram.me/FtXMoreRobot?start=0{message.chat.id}3")
+        message.chat.id, f"▪️ Наша партнерская программа считается самой эффективной, приглашайте друзей и получайтк деньги\n\n💰 Всего отчислений: 0.0₽\n\n💳 Процент с инвестиций: 12 %\n💵 Процент с выплаты: 10 %\n👥 Партнеров: 0 чел\n\n🔗 Ваша реф-ссылка: https://telegram.me/FtXMoreRobot?start=0{message.chat.id}3")
 
 
 # @bot.callback_query_handler(func=lambda c: True)
@@ -199,16 +229,25 @@ def aff(message):
 #        re_message(callback.message)
 
 
-@bot.callback_query_handler(func=lambda call: True)
+@ bot.callback_query_handler(func=lambda call: True)
 def callback(call):
-    if call.data.startswith('goinvest'):
+    if call.data.startswith('cancel'):
+        bot.answer_callback_query(
+            callback_query_id=call.id, text="🚫 Отменено")
+        re_message(call.message)
+        bot.clear_step_handler_by_chat_id(call.from_user.id)
+         bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id, text="тр")
+    elif call.data.startswith('goinvest'):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True,
                                   text="🚫 Пополните баланс, минимальная сумма инвестиции 500₽")
     elif call.data.startswith('gocollect'):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True,
-                                  text="🚫 Минимальная сумма 100₽")
+                                  text="🚫 Не достаточно средсв.\nМинимальная сумма 100₽")
     elif call.data.startswith('enter'):
-        bot.send_message(call.id, 'haha')
+        markup = telebot.types.ReplyKeyboardMarkup(True, False)
+        bot.send_message(
+            call.message.chat.id, "Введите требуемую сумму для Пополнения:", reply_markup=markup)
+        bot.register_next_step_handler(call.message, check)
 
 
 if __name__ == '__main__':
