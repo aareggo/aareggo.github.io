@@ -30,7 +30,7 @@ class TagAllMod(loader.Module):
         notifies = []
         async for user in self.client.iter_participants(message.to_id):
             notifies.append("<a href=\"tg://user?id="+ str(user.id) +"\">\u206c\u206f</a>")
-        chunkss = list(chunks(notifies, 1400))
+        chunkss = list(chunks(notifies, 1100))
         logger.error(chunkss)
         await message.delete()
         for chunk in chunkss:
