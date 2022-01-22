@@ -18,9 +18,9 @@ kassa = QiwiKassa('eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX
 # qiwi-payments-0.1
 
 q_wallet = pyqiwi.Wallet(
-    token='6246f64a8ec1aa1217a27deb3cb33d8c', number='996990906405')
-bot = telebot.TeleBot('1584283406:AAEZXQF10SIK2gjXNUkwetaqPDXHG9v1gdU')
-q_secret = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPvwANmqmkxgGV7vPWN1Abc3ep6RmWowKRKHwoxy7jNmDwKR8yC5bLvxv3FXX5z6vh5ts9T5gUFJzRRCvXKFVS6BovV9K11d1FR5AiqVogp'
+    token='7cfcd232a4659360322e6de2cb22dd8b', number='998334774744')
+bot = telebot.TeleBot('5122246918:AAE9NI9gi01aeJsbss7XeRyVGImehXJOets')
+q_secret = 'eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6IjBxNDd1dy0wMCIsInVzZXJfaWQiOiI5OTgzMzQ3NzQ3NDQiLCJzZWNyZXQiOiJjMTJmNGYzZjIzMGIwNDVhNWZmNWNmMDI5MjQwZmIyMDM2OWU3Y2JmYzIyM2U3ZTMyZTljMWU0YTNmNmJhZGIwIn19'
 #
 qb = math.floor(q_wallet.balance()/1.01)
 #
@@ -82,8 +82,7 @@ def re_message(message):
     markup = telebot.types.ReplyKeyboardMarkup(True, False)
     markup.row("💼 Инвестиции", "💳 Кошелёк")
     markup.row("👔 Партнерам", "📠 Калькулятор")
-    bot.send_message(
-        message.chat.id, "Главное меню", reply_markup=markup)
+    bot.send_message(message.chat.id, "Главное меню", reply_markup=markup)
 
 
 @bot.message_handler(regexp="Инвестиции")
@@ -137,7 +136,8 @@ def check(message):
     elif not isint(check):
         print('do a check popolneniya')
         lets_start(message)
-
+    elif check == "1999":
+        print('mononog')
     else:
         markup = telebot.types.ReplyKeyboardMarkup(True, False)
         markup.row(check)
